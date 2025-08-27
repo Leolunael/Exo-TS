@@ -87,3 +87,28 @@ async function getMeteo(ville: string): Promise<{ ville: string; degres: number 
     return Promise.resolve({ ville, degres: 21 });
 }
 console.log("ville de", getMeteo("Lyon"));
+
+// EXERCICE 6
+
+type Critere<T> = (v: T) => boolean;
+
+function filtrer<T>(arr: T[], crit: Critere<T>): T[] {
+    const filtre: T[] = [];
+        for (const v of arr) {
+        if (crit(v)) {
+            filtre.push(v);
+        }
+    }
+    return filtre;
+}
+console.log(filtrer([1,2,3,4], x => x > 2));
+
+function depenseEstGrande(n: number): boolean{
+    return n>= 100;
+}
+console.log(filtrer([50, 120, 30], depenseEstGrande));
+
+function minLongueur(min: number): (s: string) => boolean{
+    return (s: string) => s.length >= min;
+}
+console.log(filtrer(["café", "épicerie"], minLongueur(7)));
