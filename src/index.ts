@@ -88,7 +88,8 @@ async function getMeteo(ville: string): Promise<{ ville: string; degres: number 
 }
 console.log("ville de", getMeteo("Lyon"));
 
-// EXERCICE 6
+// EXERCICE 6 : créer le critère, puis le filtre. 
+// après on s'amuse avec les fonctions
 
 type Critere<T> = (v: T) => boolean;
 
@@ -100,6 +101,8 @@ function filtrer<T>(arr: T[], crit: Critere<T>): T[] {
         }
     }
     return filtre;
+
+// Possibilité de faire un for algorithmique mais plus complexe (cf correction en video) 
 }
 console.log(filtrer([1,2,3,4], x => x > 2));
 
@@ -113,7 +116,8 @@ function minLongueur(min: number): (s: string) => boolean{
 }
 console.log(filtrer(["café", "épicerie"], minLongueur(7)));
 
-// EXERCICE 7
+// EXERCICE 7 : Créer l'interface, puis la constante
+// et les fonctions
 
 export interface Transformeur {
   (v: string): string; 
@@ -122,8 +126,8 @@ export interface Transformeur {
 
 const titreCase: Transformeur = (s: string): string => {
   return s
-    .split(' ')
-    .map(mot => mot.charAt(0).toUpperCase() + mot.slice(1))
+    .split(' ') // possibilité de mettre une regex .split(/\s+/)
+    .map(mot => mot.charAt(0).toLocaleUpperCase() + mot.slice(1))
     .join(' ');
 };
 
@@ -133,5 +137,38 @@ function appliquerTransformeur(textes: string[], t: Transformeur): string[] {
   return textes.map(t);
 }
 console.log(appliquerTransformeur(["la plage", "le marché"], titreCase));
+console.log(appliquerTransformeur(["bonjour le monde"], titreCase));
 
+// EXERCICE 8
 
+//Je crois que je n'ai plus les idées claires, je ne comprends pas
+
+// EXERCICE 9
+
+type Tache = { 
+    id: string; 
+    titre: string; 
+    faite: boolean; 
+    priorite?: 1|2|3|4|5 
+};
+
+function creerTache(titre: string, priorite: 1|2|3|4|5 = 3): Tache {
+    return {
+        id: crypto.randomUUID(),
+        titre,
+        faite: false,
+        priorite
+    }
+}
+const tache1 = creerTache("Lire", 3);
+const tache2 = creerTache("Coder", 1);
+console.log("Tache:", tache2);
+
+function majTache(t: Tache, maj: { titre?: string; faite?: boolean; priorite?: 1|2|3|4|5 } = {}): Tache{
+    return{
+        ...t,
+        ...maj
+    };
+}
+const nvlTache = majTache(tache2, { titre: "Coder Typescript", faite: true});
+console.log("Tache:", nvlTache);
