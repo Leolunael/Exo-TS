@@ -112,3 +112,26 @@ function minLongueur(min: number): (s: string) => boolean{
     return (s: string) => s.length >= min;
 }
 console.log(filtrer(["café", "épicerie"], minLongueur(7)));
+
+// EXERCICE 7
+
+export interface Transformeur {
+  (v: string): string; 
+  locale?: string; 
+}
+
+const titreCase: Transformeur = (s: string): string => {
+  return s
+    .split(' ')
+    .map(mot => mot.charAt(0).toUpperCase() + mot.slice(1))
+    .join(' ');
+};
+
+titreCase.locale = "fr-FR";
+
+function appliquerTransformeur(textes: string[], t: Transformeur): string[] {
+  return textes.map(t);
+}
+console.log(appliquerTransformeur(["la plage", "le marché"], titreCase));
+
+
